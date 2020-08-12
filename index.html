@@ -29,8 +29,8 @@
     </div>
 
     <!-- Webcam video snapshot -->
-    <canvas id="canvas" width="640" height="480"></canvas>
-
+    <canvas id="canvas" width="100%" height="80%"></canvas>
+    <div id="demo"></div>
 
     <script>
         'use strict';
@@ -71,6 +71,18 @@
         snap.addEventListener("click", function () {
             context.drawImage(video, 0, 0, 640, 480);
         });
+
+
+        const API_URL = `https://www.cloudflare.com/cdn-cgi/trace`;
+        function onDataRecieve() {
+            const ipRegex = /[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}/
+            const IP = xhttp.responseText.match(ipRegex)[0];
+            document.getElementById("demo").innerHTML = IP
+        }
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = onDataRecieve;
+        xhttp.open("GET", API_URL, true);
+        xhttp.send();
     </script>
 </body>
 
